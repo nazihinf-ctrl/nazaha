@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>المنتدى الشبابي للفكر والمشاركة المدنية – نزاهة</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#0e1f17;
+  --card:rgba(255,255,255,0.12);
+  --blur:blur(20px);
+  --green:#2ecc71;
+  --text:#ffffff;
+  --muted:#cfd8d3;
+  --radius:18px;
+  --shadow:0 20px 40px rgba(0,0,0,.35);
+}
+*{box-sizing:border-box}
+body{
+  margin:0;
+  font-family:'Cairo',system-ui;
+  background:linear-gradient(180deg,#0b1a13,#0e1f17);
+  color:var(--text);
+}
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:40px 20px;
+}
+header{
+  text-align:center;
+  margin-bottom:40px;
+}
+header h1{
+  margin:0;
+  font-size:32px;
+  font-weight:700;
+}
+header p{
+  color:var(--muted);
+  margin-top:10px;
+}
+.grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+  gap:24px;
+}
+.card{
+  background:var(--card);
+  backdrop-filter:var(--blur);
+  border-radius:var(--radius);
+  box-shadow:var(--shadow);
+  padding:24px;
+  transition:.4s ease;
+  cursor:pointer;
+  position:relative;
+}
+.card:hover{
+  transform:translateY(-6px);
+}
+.card h2{
+  margin-top:0;
+  font-size:20px;
+  color:var(--green);
+}
+.card p, .card li{
+  color:var(--muted);
+  line-height:1.7;
+}
+ul{padding:0 18px}
+.badge{
+  display:inline-block;
+  padding:6px 14px;
+  border-radius:20px;
+  background:rgba(46,204,113,.15);
+  color:var(--green);
+  margin:4px 4px 0 0;
+  font-size:14px;
+}
+.map{
+  border-radius:14px;
+  overflow:hidden;
+  height:300px;
+}
+iframe{width:100%;height:100%;border:0}
+form{
+  display:grid;
+  gap:14px;
+}
+input,select,textarea,button{
+  font-family:'Cairo';
+  border-radius:12px;
+  border:none;
+  padding:12px 14px;
+  font-size:15px;
+}
+input,select,textarea{background:rgba(255,255,255,.15);color:#fff;}
+textarea{resize:none;height:120px}
+button{
+  background:var(--green);
+  color:#062015;
+  font-weight:700;
+  cursor:pointer;
+}
+.hidden{display:none}
+footer{
+  margin-top:60px;
+  text-align:center;
+  color:var(--muted);
+  font-size:14px;
+}
+.social a{
+  color:var(--green);
+  text-decoration:none;
+  margin:0 10px;
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+.social svg{width:20px; height:20px; fill:var(--green);}
+.typing{
+  margin-top:20px;
+  font-size:18px;
+  color:var(--green);
+  height:28px;
+}
+/* أزرار الاستمارات مع أيقونات SVG */
+.action-btn{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:14px 18px;
+  margin-top:12px;
+  border-radius:14px;
+  background:rgba(46,204,113,.15);
+  color:var(--green);
+  text-decoration:none;
+  font-weight:600;
+  transition:.3s ease;
+}
+.action-btn:hover{
+  background:rgba(46,204,113,.25);
+  transform:translateY(-2px);
+}
+.action-btn svg{
+  width:22px;
+  height:22px;
+  fill:var(--green);
+}
+/* بطاقات أعضاء الإدارة */
+.admin-card{
+  display:flex;
+  align-items:center;
+  gap:14px;
+  padding:14px;
+  background:rgba(255,255,255,.08);
+  border-radius:14px;
+  cursor:pointer;
+  transition:.3s ease;
+  position:relative;
+}
+.admin-card:hover{background:rgba(46,204,113,.12);}
+.admin-icon{width:50px; height:50px; fill:var(--green);}
+.admin-info{display:flex; flex-direction:column;}
+.admin-role{color:var(--green); font-weight:600;}
+/* واجهة المهام شبيهة iOS Messages */
+.admin-popup{
+  position:absolute;
+  top:60px;
+  left:50%;
+  transform:translateX(-50%);
+  width:90%;
+  max-width:400px;
+  background:#0e1f17;
+  border-radius:20px;
+  padding:12px;
+  display:none;
+  flex-direction:column;
+  gap:8px;
+  box-shadow:0 10px 30px rgba(0,0,0,.5);
+  z-index:20;
+}
+.admin-popup.show{display:flex;}
+.msg-bubble{
+  background:rgba(46,204,113,.15);
+  padding:10px 14px;
+  border-radius:18px;
+  color:#fff;
+  line-height:1.4;
+}
+.msg-bubble strong{color:var(--green);}
+</style>
+</head>
+<body>
+<div class="container">
+<header>
+  <h1>المنتدى الشبابي للفكر والمشاركة المدنية – نزاهة</h1>
+  <p>إطار شبابي مستقل وغير ربحي لتعزيز الوعي والمشاركة المدنية</p>
+  <div class="typing" id="typing"></div>
+</header>
+<div class="grid">
+
+<!-- من نحن -->
+<div class="card">
+<h2>من نحن</h2>
+<p>
+المنتدى الشبابي للفكر والمشاركة المدنية – نزاهة هو إطار شبابي مستقل وغير ربحي، يُعنى بتعزيز الوعي الفكري والمدني لدى الشباب، وتنمية قدراتهم على المشاركة الإيجابية في الشأن العام، عبر النقاش المسؤول، والتكوين، والورشات، والمبادرات المجتمعية، بعيدًا عن أي انتماءات حزبية أو أيديولوجية.
+</p>
+</div>
+
+<!-- القيادة والإدارة -->
+<div class="card">
+<h2>القيادة والإدارة</h2>
+
+<div class="admin-card" onclick="togglePopup(this)">
+<svg class="admin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2a7 7 0 1 0 0 14 7 7 0 0 0 0-14zm0 16c-4.42 0-8 1.79-8 4v2h16v-2c0-2.21-3.58-4-8-4z"/></svg>
+<div class="admin-info">
+<span><strong>نزيه عبدالله بومهني</strong></span>
+<span class="admin-role">المؤسس، رئيس المنتدى</span>
+</div>
+<div class="admin-popup">
+<div class="msg-bubble"><strong>مهام:</strong> وضع الاستراتيجيات.</div>
+<div class="msg-bubble"><strong>مهام:</strong> إدارة المنتدى والإشراف على المبادرات والورشات.</div>
+<div class="msg-bubble"><strong>مهام:</strong> تمثيل المنتدى في اللقاءات الرسمية.</div>
+</div>
+</div>
+
+<div class="admin-card" onclick="togglePopup(this)">
+<svg class="admin-icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/></svg>
+<div class="admin-info">
+<span><strong>عبدالوادود طعم الله</strong></span>
+<span class="admin-role">أمين السر، مدير ديوان الرئاسة</span>
+</div>
+<div class="admin-popup">
+<div class="msg-bubble"><strong>مهام:</strong> توثيق الاجتماعات.</div>
+<div class="msg-bubble"><strong>مهام:</strong> متابعة الأعمال الإدارية.</div>
+<div class="msg-bubble"><strong>مهام:</strong> دعم المؤسس في إدارة المنتدى.</div>
+</div>
+</div>
+
+</div>
+
+<!-- الرؤية -->
+<div class="card">
+<h2>الرؤية</h2>
+<p>
+إعداد جيل شبابي واعٍ، يمتلك فكرًا نقديًا ومسؤولًا، وقادرًا على المشاركة المدنية الفعّالة في خدمة المصلحة العامة وتعزيز النزاهة والمواطنة.
+</p>
+</div>
+
+<!-- الاستمارات -->
+<div class="card">
+<h2>الاستمارات</h2>
+<a class="action-btn" href="https://forms.gle/jxpJzCD9UMTzZSEc9" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/></svg>
+طلب الانخراط
+</a>
+<a class="action-btn" href="https://forms.gle/CkKhyLVjnsLBot8P8" target="_blank">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14l4-4h12c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2z"/></svg>
+طلب التوظيف
+</a>
+</div>
+
+<!-- الموقع الجغرافي -->
+<div class="card">
+<h2>الموقع الجغرافي</h2>
+<div class="map">
+<iframe src="https://www.google.com/maps?q=El%20Kala%20El%20Tarf%20Algeria&output=embed" loading="lazy"></iframe>
+</div>
+</div>
+
+<!-- تواصل معنا -->
+<div class="card">
+<h2>تواصل معنا</h2>
+<form id="contactForm">
+<input type="text" name="الاسم" placeholder="الاسم الكامل" required>
+<select name="الصفة" id="role" required>
+<option value="">اختر الصفة</option>
+<option value="زائر">زائر</option>
+<option value="عضو">عضو</option>
+<option value="موظف">موظف</option>
+<option value="دعم">دعم</option>
+</select>
+<input type="text" name="رقم_العضوية" id="member" class="hidden" placeholder="رقم العضوية (7 أرقام)">
+<input type="text" name="رقم_التعريف_الوظيفي" id="staff" class="hidden" placeholder="رقم التعريف الوظيفي (6 أرقام)">
+<textarea name="الرسالة" placeholder="نص الرسالة" required></textarea>
+<button type="button" onclick="sendEmail()">إرسال الرسالة</button>
+</form>
+</div>
+
+<!-- منصات التواصل -->
+<div class="card">
+<h2>منصات التواصل</h2>
+<div class="social">
+<a href="https://www.facebook.com/nazaha.36" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M22 12a10 10 0 1 0-11 9.95V14h-3v-3h3v-2.3c0-3 1.79-4.7 4.53-4.7 1.31 0 2.69.23 2.69.23v3h-1.52c-1.5 0-1.96.93-1.96 1.88V11h3.33l-.53 3h-2.8v7.95A10 10 0 0 0 22 12z"/></svg>
+Facebook
+</a>
+<a href="https://www.instagram.com/nazaha.36" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M7 2C4.24 2 2 4.24 2 7v10c0 2.76 2.24 5 5 5h10c2.76 0 5-2.24 5-5V7c0-2.76-2.24-5-5-5H7zm10 2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3V7a3 3 0 0 1 3-3h10zm-5 2a5 5 0 1 0 0 10 5 5 0 0 0 0-10zm0 2a3 3 0 1 1 0 6 3 3 0 0 1 0-6zm4.5-.5a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/></svg>
+Instagram
+</a>
+<a href="https://www.youtube.com/@nazaha.36" target="_blank">
+<svg viewBox="0 0 24 24"><path d="M10 15l5.19-3L10 9v6zm12-3c0-1.08-.05-2.16-.15-3.22-.11-1.18-.65-2.16-1.53-2.99-.87-.83-1.92-1.27-3.09-1.38C14.16 4 12.08 4 10 4H10c-2.08 0-4.16.05-6.23.15-1.17.11-2.22.55-3.09 1.38-.88.83-1.42 1.81-1.53 2.99C.05 9.84 0 10.92 0 12s.05 2.16.15 3.22c.11 1.18.65 2.16 1.53 2.99.87.83 1.92 1.27 3.09 1.38 2.07.1 4.15.15 6.23.15s4.16-.05 6.23-.15c1.17-.11 2.22-.55 3.09-1.38.88-.83 1.42-1.81 1.53-2.99.1-1.06.15-2.14.15-3.22z"/></svg>
+YouTube
+</a>
+</div>
+</div>
+
+</div>
+<footer>© المنتدى الشبابي للفكر والمشاركة المدنية – نزاهة</footer>
+</div>
+
+<script>
+const words = ["وعي", "فكر", "مشاركة", "المبادرة الشبابية الأولى في ولاية الطارف"];
+let i = 0, j = 0, del = false;
+const el = document.getElementById("typing");
+
+setInterval(() => {
+if(!del && j <= words[i].length) el.textContent = words[i].slice(0,j++);
+else if(del && j >= 0) el.textContent = words[i].slice(0,j--);
+if(j === words[i].length + 1) del = true;
+if(del && j === 0) { del = false; i = (i+1) % words.length; }
+}, 120);
+
+const role = document.getElementById("role");
+const member = document.getElementById("member");
+const staff = document.getElementById("staff");
+
+role.onchange = () => {
+member.classList.add("hidden");
+staff.classList.add("hidden");
+if(role.value === "عضو") member.classList.remove("hidden");
+if(role.value === "موظف") staff.classList.remove("hidden");
+};
+
+function togglePopup(card){
+const popup = card.querySelector(".admin-popup");
+popup.classList.toggle("show");
+}
+
+function sendEmail() {
+const name = document.querySelector('input[name="الاسم"]').value;
+const roleVal = document.querySelector('#role').value;
+const memberVal = document.querySelector('#member').value;
+const staffVal = document.querySelector('#staff').value;
+const message = document.querySelector('textarea[name="الرسالة"]').value;
+
+let body = `الاسم الكامل: ${name}\n`;
+if(roleVal === "عضو") body += `رقم العضوية: ${memberVal}\n`;
+if(roleVal === "موظف") body += `رقم التعريف الوظيفي: ${staffVal}\n`;
+body += `نص الرسالة:\n${message}`;
+
+window.location.href = `mailto:nazahaa36.inf@gmail.com?subject=رسالة من المنتدى&body=${encodeURIComponent(body)}`;
+}
+</script>
+</body>
+</html>
